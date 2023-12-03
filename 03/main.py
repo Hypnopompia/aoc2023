@@ -31,10 +31,10 @@ class Schematic:
         start = x
         end = x
         numberString = ''
-        while start -1 >= 0 and self.schematic[y][start-1].isnumeric():
-            start = start - 1
-        while end +1 <= len(self.schematic[y]) and self.schematic[y][end].isnumeric():
-            end = end + 1
+        while start-1 >= 0 and self.schematic[y][start-1].isnumeric():
+            start -= 1
+        while end+1 <= len(self.schematic[y]) and self.schematic[y][end].isnumeric():
+            end += 1
         for i in range(start, end):
             numberString += self.schematic[y][i]
 
@@ -67,8 +67,7 @@ class Schematic:
         allParts = {}
         symbols = self.findSymbols()
         for i in range(len(symbols)):
-            symbol = symbols[i]
-            parts = self.findAdjacentParts(symbol)
+            parts = self.findAdjacentParts(symbols[i])
             allParts.update(parts)
         return allParts
     
