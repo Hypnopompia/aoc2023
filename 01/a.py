@@ -1,6 +1,6 @@
 import re
 
-file = open('01/input.txt', 'r')
+file = open('input.txt', 'r')
 totalCalibrationValue = 0
 while True:
     line = file.readline()
