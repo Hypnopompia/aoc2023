@@ -15,6 +15,28 @@ class Seeds:
             locations.append(self.getTargetValue(seed))
         return locations
 
+    def getSeedRangeLocation(self):
+        lowestLocation = None
+        seeds = self.seeds
+
+        while len(seeds) > 0:
+            start = seeds.pop(0)
+            length = seeds.pop(0)
+            end = start + length
+            i = 1
+            for seed in range(start, end):
+                if i % 500000 == 0:
+                    print(str(i) + "/" + str(length) + " " + str(round((i / length) * 100, 2)) +"%")
+                i=i+1
+
+                location = self.getTargetValue(seed)
+                if lowestLocation is None:
+                    lowestLocation = location
+                else:
+                    lowestLocation = min(lowestLocation, location)
+
+        return lowestLocation
+
     def getTargetValue(self, id, categoryName = 'seed'):
         category = self.categories[categoryName]
         result = category.resolve(id)
@@ -79,3 +101,5 @@ if __name__ == '__main__':
 
     seeds = Seeds(seeds, categories)
     print("Lowest Seed Location: " + str(seeds.getLowestSeedLocation()))
+    print("Lowest Seed Range Location: " + str(seeds.getSeedRangeLocation()))
+
