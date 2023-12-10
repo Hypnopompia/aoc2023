@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     hands = sorted(hands, key=lambda hand: hand.weight())
 
-    totalWinnings = 0;
+    totalWinnings = 0
     for i, hand in enumerate(hands):
         rank = i + 1
         totalWinnings += rank * hand.bet
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     hands = sorted(hands, key=lambda hand: hand.jokerWeight())
 
-    jokerWinnings = 0;
+    jokerWinnings = 0
     for i, hand in enumerate(hands):
         rank = i + 1
         jokerWinnings += rank * hand.bet
