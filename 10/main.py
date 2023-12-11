@@ -39,29 +39,11 @@ class Map:
     def getStartConnections(self):
         neighbors = []
 
-        north = self.start.north()
-        northPipe = self.getPipe(north)
-        if northPipe is not None:
-            if self.start.coordinates() in northPipe.getEnds():
-                neighbors.append(northPipe)
-
-        south = self.start.south()
-        southPipe = self.getPipe(south)
-        if southPipe is not None:
-            if self.start.coordinates() in southPipe.getEnds():
-                neighbors.append(southPipe)
-
-        east = self.start.east()
-        eastPipe = self.getPipe(east)
-        if eastPipe is not None:
-            if self.start.coordinates() in eastPipe.getEnds():
-                neighbors.append(eastPipe)
-
-        west = self.start.west()
-        westPipe = self.getPipe(west)
-        if westPipe is not None:
-            if self.start.coordinates() in westPipe.getEnds():
-                neighbors.append(westPipe)
+        for direction in [self.start.north(), self.start.south(), self.start.east(), self.start.west()]:
+            pipe = self.getPipe(direction)
+            if pipe is not None:
+                if self.start.coordinates() in pipe.getEnds():
+                    neighbors.append(pipe)
 
         return neighbors
 
@@ -128,7 +110,6 @@ class Map:
                         insideTiles += 1
         return insideTiles
                     
-
     def printPipeMap(self):
         for row in self.map:
             for pipe in row:
@@ -176,12 +157,6 @@ class Pipe:
         self.connected = False
         self.inside = None
         self.lastPoint = False
-
-    def isEastCorner(self):
-        return self.type in [PipeType.NE, PipeType.SE]
-
-    def isWestCorner(self):
-        return self.type in [PipeType.NW, PipeType.SW]
 
     def coordinates(self):
         return self.x, self.y
