@@ -18,8 +18,7 @@ def emptyRows(universe):
             emptyRows.append(y)
     return emptyRows
 
-def galaxies(universe, emptyCols, emptyRows):
-    expandFactor = 1000000
+def galaxies(universe, emptyCols, emptyRows, expandFactor):
     galaxies = []
     for y, row in enumerate(universe):
         previousEmptyRows = len([i for i in emptyRows if i < y])
@@ -46,6 +45,12 @@ with open("input.txt", "r", encoding="utf-8") as file:
     for line in file:
         universe.append([*line.strip()])
 
-galaxies = galaxies(universe, emptyCols(universe), emptyRows(universe))
-distanceSum = sum(distances(galaxies))
-print(f"Distance Sum: {distanceSum}")
+expandFactor = 2
+day1Galaxies = galaxies(universe, emptyCols(universe), emptyRows(universe), expandFactor)
+distanceSum = sum(distances(day1Galaxies))
+print(f"Distance Sum Day 1: {distanceSum}")
+
+expandFactor = 1000000
+day2Galaxies = galaxies(universe, emptyCols(universe), emptyRows(universe), expandFactor)
+distanceSum = sum(distances(day2Galaxies))
+print(f"Distance Sum Day 2: {distanceSum}")
