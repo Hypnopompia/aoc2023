@@ -48,9 +48,9 @@ with open("input.txt", "r", encoding="utf-8") as file:
 expandFactor = 2
 day1Galaxies = galaxies(universe, emptyCols(universe), emptyRows(universe), expandFactor)
 distanceSum = sum(distances(day1Galaxies))
-print(f"Distance Sum Day 1: {distanceSum}")
+print(f"Distance Sum Part 1: {distanceSum}")
 
 expandFactor = 1000000
 day2Galaxies = galaxies(universe, emptyCols(universe), emptyRows(universe), expandFactor)
 distanceSum = sum(distances(day2Galaxies))
-print(f"Distance Sum Day 2: {distanceSum}")
+print(f"Distance Sum Part 2: {distanceSum}")
