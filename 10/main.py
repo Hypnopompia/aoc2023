@@ -1,5 +1,6 @@
 from enum import Enum
 from termcolor import colored
+import fullcontrol as fc
 
 class Map:
     def __init__(self, pipeMap):
@@ -116,6 +117,33 @@ class Map:
                 print(pipe, end='')
             print()
 
+    def savePipeGcode(self):
+        x_offset = 20
+        y_offset = 20
+        scale = 1.5
+
+        filename = 'pipe_map'
+        printer = 'ender_3'
+        print_settings = {'extrusion_width': 0.5,'extrusion_height': 0.2, 'nozzle_temp': 210, 'bed_temp': 60, 'fan_percent': 100}
+
+        startPoint = fc.Point(x=(self.mapPolygon[0][0]*scale)+x_offset, y=(self.mapPolygon[0][1]*scale)+y_offset, z=0.2)
+
+        steps = []
+        # steps.append(fc.ManualGcode(text="START_PRINT BED_TEMP=60 EXTRUDER_TEMP=210"))
+        # steps.append(fc.Extruder(on=False))
+        # steps.append(startPoint)
+
+        steps.append(fc.Extruder(on=True))
+        steps.extend([fc.Point(x=(point[0]*scale)+x_offset, y=(point[1]*scale)+y_offset, z=0.2) for point in self.mapPolygon])
+        steps.append(startPoint)
+
+        steps.append(fc.Extruder(on=False))
+        steps.append(fc.ManualGcode(text="END_PRINT"))
+
+        # fc.transform(steps, 'plot')
+
+        fc.transform(steps, 'gcode', fc.GcodeControls(printer_name=printer, save_as=filename, initialization_data=print_settings))
+        
 class PipeType(Enum):
     NS = 1
     EW = 2
@@ -224,5 +252,6 @@ pipeMap.findConnectedPipes()
 steps = pipeMap.findStepCount()
 insideTiles = pipeMap.findInsideTiles()
 pipeMap.printPipeMap()
+pipeMap.savePipeGcode()
 print(f"Steps: {steps}")
 print(f"Inside Tiles: {insideTiles}")
