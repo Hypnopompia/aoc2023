@@ -127,8 +127,6 @@ class Map:
         printer = 'ender_3'
         print_settings = {'extrusion_width': 0.5,'extrusion_height': 0.2, 'nozzle_temp': 210, 'bed_temp': 60, 'fan_percent': 100}
 
-
-
         startPoint = fc.Point(x=(self.mapPolygon[0][0]*scale)+x_offset, y=(self.mapPolygon[0][1]*scale)+y_offset, z=0.2)
 
         steps = []
@@ -139,9 +137,10 @@ class Map:
         for i in range(layers):
             steps.append(fc.Extruder(on=True))
             steps.extend([fc.Point(x=(point[0]*scale)+x_offset, y=(point[1]*scale)+y_offset, z=(i+1)*0.2) for point in self.mapPolygon])
-            steps.append(startPoint)
+            steps.append(fc.Point(x=(self.mapPolygon[0][0]*scale)+x_offset, y=(self.mapPolygon[0][1]*scale)+y_offset, z=(i+1)*0.2))
 
         steps.append(fc.Extruder(on=False))
+        steps.append(fc.Point(x=(self.mapPolygon[0][0]*scale)+x_offset, y=(self.mapPolygon[0][1]*scale)+y_offset, z=layers*2*0.2))
 
         steps.append(fc.ManualGcode(text="END_PRINT"))
 
